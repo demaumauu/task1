@@ -1,0 +1,275 @@
+using System;
+
+public class Program
+{
+	public static void Main()
+	{
+		bool exit = false;
+		while (exit == false)
+		{
+			Console.WriteLine("\nWelcome to my game. Press E to exit, N to play naughts and crosses, R to play rock, paper, scissors, and H to open up the help manual.");
+			string input = Console.ReadLine();
+			if (input.ToLower() == "e")
+			{
+				Console.WriteLine("Thanks for playing! Have a good day.");
+				exit = true;
+			}
+			else if (input.ToLower() == "n")
+			{
+				Console.WriteLine("\nNaughts and Crosses!");
+				nac();
+			}
+			else if (input.ToLower() == "r")
+			{
+				Console.WriteLine("\nRock, paper, scissors!");
+				rps();
+			}
+			else if (input.ToLower() == "h")
+			{
+				Console.WriteLine("\nHelp!");
+				help();
+			}
+			else
+			{
+				Console.WriteLine("Please choose.\n");
+			}
+		}
+	}
+
+	public static void rps() //make a loop
+	{
+		bool leave = false;
+		while (leave == false)
+		{
+			Console.WriteLine("\nWhich one do you choose?\n");
+			string playerChoice = Console.ReadLine(); // the user makes a choice between rps and this input can be used alongside the computer's randomised choice to see if the player wins or loses, or if its a tie
+			Random rand = new Random();
+			int computerChoice = rand.Next(1, 4); // this randomises the computers response to the users choice between rock, paper, scissors. there are three variables as there are three possibilites: a tie, a win, and a lose.
+			playerChoice.ToLower(); // Lower case the player input just in case of input error
+			if (computerChoice == 1) // Checks if the player ties with the Computer
+			{
+				if (playerChoice.Contains("Rock"))
+				{
+					// Check if the playerChoice contains the specific input
+					Console.WriteLine("\nThe computer chose rock.");
+					Console.WriteLine("It is a tie.\n");
+				}
+				else if (playerChoice.Contains("paper"))
+				{
+					Console.WriteLine("\nThe computer chose paper.");
+					Console.WriteLine("It is a tie.\n");
+				}
+				else if (playerChoice.Contains("scissors"))
+				{
+					Console.WriteLine("\nThe computer chose scissors.");
+					Console.WriteLine("It is a tie.\n");
+				}
+				else
+				{
+					Console.WriteLine("\nChoose from r, p ,s");
+				}
+			}
+			else if (computerChoice == 2) // Checks if the player loses to the computer
+			{
+				// Check if the playerChoice contains the specific input
+				if (playerChoice.Contains("rock"))
+				{
+					Console.WriteLine("\nThe computer chose paper.");
+					Console.WriteLine("You lose.\n");
+				}
+				else if (playerChoice.Contains("paper"))
+				{
+					Console.WriteLine("\nThe computer chose scissors.");
+					Console.WriteLine("You lose.\n");
+				}
+				else if (playerChoice.Contains("scissors"))
+				{
+					Console.WriteLine("\nThe computer chose rock.");
+					Console.WriteLine("You lose.\n");
+				}
+				else
+				{
+					Console.WriteLine("\nChoose from r, p ,s");
+				}
+			}
+			else if (computerChoice == 3) // Checks if the player wins against the computer
+			{
+				// Check if the playerChoice contains the specific input
+				if (playerChoice.Contains("rock"))
+				{
+					Console.WriteLine("\nThe computer chose scissors.");
+					Console.WriteLine("You win!\n");
+				}
+				else if (playerChoice.Contains("paper"))
+				{
+					Console.WriteLine("\nThe computer chose rock.");
+					Console.WriteLine("You win!\n");
+				}
+				else if (playerChoice.Contains("scissors"))
+				{
+					Console.WriteLine("\nThe computer chose paper.");
+					Console.WriteLine("You win!\n");
+				}
+				else
+				{
+					Console.WriteLine("\nChoose from rock, paper , scissors");
+				}
+			}
+
+			Console.WriteLine("Would you like to keep playing? y/n");
+			string playerLeave = Console.ReadLine();
+			if (playerLeave.Contains("yes"))
+			{
+				leave = false;
+			}
+			else if (playerLeave.Contains("no"))
+			{
+				leave = true;
+			}
+		}
+	}
+
+	public static void nac()
+	{
+		bool leave = false; // have option to play game again by looping or option to leave game by making bool true
+		while (leave == false)
+		{
+			Console.WriteLine("\nPlease enter Player 1 name:");
+			string Player1 = Console.ReadLine();
+			Player1.ToLower();
+			Console.WriteLine("\nHi, " + Player1 + "!");
+			Console.WriteLine("\nPlease enter Player 2 name:");
+			string Player2 = Console.ReadLine();
+			Player2.ToLower();
+			Console.WriteLine("\nHello, " + Player2 + "!");
+			Console.WriteLine("\nYou are now ready to play!\n");
+			Console.WriteLine(Player1 + " goes first");
+			bool p1 = true;
+			string[, ] grid =
+			{
+				{
+					"_",
+					"_",
+					"_"
+				},
+				{
+					"_",
+					"_",
+					"_"
+				},
+				{
+					"_",
+					"_",
+					"_"
+				}
+			};
+			while (true)
+			{
+				for (int i = 0; i < 3; i++)
+				{
+					for (int j = 0; j < 3; j++)
+					{
+						Console.Write(grid[i, j]);
+					}
+
+					Console.WriteLine();
+				}
+
+				Console.WriteLine("First row: ");
+				int num1 = Convert.ToInt32(Console.ReadLine());
+				Console.WriteLine("Second period: ");
+				int num2 = Convert.ToInt32(Console.ReadLine());
+				if (p1 == true)
+				{
+					grid[num1, num2] = "X";
+					p1 = false;
+					Console.WriteLine("\n" + Player2 + "'s turn:\n");
+				}
+				else
+				{
+					grid[num1, num2] = "O";
+					p1 = true;
+					Console.WriteLine("\n" + Player1 + "'s turn:\n");
+				}
+			}
+
+			for (int i = 0; i < 3; i++)
+			{
+				if (grid[0, i] == grid[1, i] && grid[1, i] == grid[2, i] && grid[0, 1] != "_")
+					;
+				{
+					Console.WriteLine("win");
+				}
+
+				if (grid[i, 0] == grid[i, 1] && grid[i, 1] == grid[i, 2] && grid[i, 0] != "_")
+					;
+				{
+					//vertical win
+					Console.WriteLine("win");
+				}
+
+				if (grid[0, i] == grid[i, 1] && grid[i, 1] == grid[2, i] && grid[0, i] != "_")
+					;
+				{
+					Console.WriteLine("win");
+				}
+
+				if (grid[i, 2] == grid[i, 1] && grid[i, 1] == grid[i, 0] && grid[i, 2] != "_")
+					;
+				{
+					Console.WriteLine("win");
+				}
+			}
+		}
+	}
+
+	static void help()
+	{
+		bool ext = false;
+		while (ext == false)
+		{
+			Console.WriteLine("\nwhat did u need help with?\n");
+			Console.WriteLine("Rock, paper, scissors (type rps), or naughts and crosses(type nac)?");
+			string response2 = Console.ReadLine();
+			if (response2.ToLower() == "rps")
+			{
+				Console.WriteLine("\nTo play rock, paper, scissors, you must choose an option between one of the three. \nEach time you choose, there's a 33% chance you'll win. Simply choose an option.\n");
+			}
+			else if (response2.ToLower() == "nac")
+			{
+				Console.WriteLine("\nPlaying naughts and crosses is like plotting out coordinates. Rows are horizontal, periods are vertical.\n");
+				Console.WriteLine("To put the marks where you want them, you must put the coordinates in the right squares.\n");
+				Console.WriteLine("The rows and periods start at zero and end at two. For example, the coordinate for the top left box would be (0,0) because its zero on the row and zero on the period.\n");
+				Console.WriteLine("The coordinates for the middle box is (1,1) because its one down the period and one across the road.\n");
+				Console.WriteLine("The coordiantes for the bottom right box is (2,2) because its two down, and two across, and so on.\n");
+				Console.WriteLine("Type in m to access all of the coordinates.\n");
+				string more = Console.ReadLine();
+				if (more.ToLower() == "m")
+				{
+					Console.WriteLine("\n(0,0)(0,1)(0,1)\n");
+					Console.WriteLine("(1,0)(1,1)(1,2)\n");
+					Console.WriteLine("(2,0)(1,2)(2,2)\n");
+				}
+			}
+			else
+			{
+				Console.WriteLine("Please choose.");
+			}
+			
+			Console.WriteLine("Would you like more help?");
+			string exit = Console.ReadLine();
+			if (exit.ToLower() == "no")
+			{
+				ext = true;
+			}
+			else if (exit.ToLower() == "yes")
+			{
+				ext = false;
+			}
+			else
+			{
+				Console.WriteLine("Please choose.");
+			}
+		}
+	}
+}
